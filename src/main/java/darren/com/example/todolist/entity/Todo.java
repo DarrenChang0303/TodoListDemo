@@ -1,41 +1,36 @@
 package darren.com.example.todolist.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table
+@Getter@Setter
+@NoArgsConstructor
+@ToString
 public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
     @Column
-    String task;
+    String task = "";
 
-    @Column
-    Integer status;
+    @Column(insertable = false, columnDefinition = "int default 1")
+    Integer status = 1;
 
-    public Integer getId() {
-        return id;
-    }
+    @CreatedDate
+    @Column(updatable = false, nullable = false)
+    Date createTime = new Date();
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTask() {
-        return task;
-    }
-
-    public void setTask(String task) {
-        this.task = task;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+    @LastModifiedDate
+    @Column(nullable = false)
+    Date updateTime = new Date();
 }
